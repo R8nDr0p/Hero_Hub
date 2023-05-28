@@ -22,7 +22,7 @@ function App() {
   const handleSubmit = async (searchHero) => {
     try {
       const response = await fetch(
-        `https://gateway.marvel.com:443/v1/public/characters?nameStartsWith=spider&ts=1&apikey=28d1734eee27b04819f015a90d39e45e&hash=8e43e9b8786ade83ad56396cfa7eb337`
+        `https://gateway.marvel.com:443/v1/public/characters?nameStartsWith=${searchHero}&ts=1&apikey=28d1734eee27b04819f015a90d39e45e&hash=8e43e9b8786ade83ad56396cfa7eb337`
       );
       const result = await response.json();
       if (result.data && result.data.results) {
@@ -63,7 +63,7 @@ function App() {
 
   return (
     <>
-      <Navbar />
+      <Navbar handleSearchSubmit={handleSubmit} />
       {/* <Charactercard
         name={heroarr[1].name}
         description={heroarr[1].description}
