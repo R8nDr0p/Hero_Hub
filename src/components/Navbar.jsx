@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-function Navbar({ handleSearchSubmit }) {
+function Navbar({ handleSearchSubmit, suggestionList }) {
   const [letter, setLetter] = useState();
 
   const handleLoad = (e) => {
@@ -11,6 +11,13 @@ function Navbar({ handleSearchSubmit }) {
   // const handleSubmit = () => {
   //   handleSearchSubmit(letter);
   // };
+
+  let listAll = null;
+  if (suggestionList) {
+    suggestionList.map((hero) => (
+      <option id="suggestionsList" value={hero.name} />
+    ));
+  }
 
   return (
     <>
@@ -25,7 +32,9 @@ function Navbar({ handleSearchSubmit }) {
               aria-label="Search"
               value={letter}
               onChange={handleLoad}
+              list="suggestionsList"
             />
+            <datalist id="suggestionsList">{listAll}</datalist>
             <button className="btn btn-outline-success" type="submit">
               Search
             </button>

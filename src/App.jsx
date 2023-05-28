@@ -6,6 +6,7 @@ import Charactercard from "./components/Charactercard";
 
 function App() {
   const [heroarr, setHeroarr] = useState([]);
+  const [suggestions, setSuggestions] = useState([]);
   // const handleSubmit = async (searchHero) => {
   //   fetch(
   //     `https://gateway.marvel.com:443/v1/public/characters?nameStartsWith=spider-man&ts=1&apikey=28d1734eee27b04819f015a90d39e45e&hash=8e43e9b8786ade83ad56396cfa7eb337`
@@ -20,18 +21,26 @@ function App() {
   // };
 
   const handleSubmit = async (searchHero) => {
+    const proxyUrl = `https://cors-anywhere.herokuapp.com/`;
+    const apiUrl = `https://superheroapi.com/api/2468378386643913/search/${searchHero}`;
+
     try {
-      const response = await fetch(
-        `https://gateway.marvel.com:443/v1/public/characters?nameStartsWith=${searchHero}&ts=1&apikey=28d1734eee27b04819f015a90d39e45e&hash=8e43e9b8786ade83ad56396cfa7eb337`
-      );
+      const response = await fetch(proxyUrl + apiUrl);
       const result = await response.json();
-      if (result.data && result.data.results) {
-        setHeroarr(result.data.results);
-      }
+      console.log(result.results);
+      setHeroarr(result.results);
+      setSuggestions(result.results);
+      console.log(searchHero);
     } catch (error) {
       console.log("error", error);
     }
   };
+  // const handleSubmit = async (searcHero) => {
+  //   fetch("https://superheroapi.com/api/2468378386643913/search/iron man")
+  //     .then((response) => response.text())
+  //     .then((result) => console.log(result))
+  //     .catch((error) => console.log("error", error));
+  // };
 
   useEffect(() => {
     handleSubmit();
@@ -41,29 +50,21 @@ function App() {
     console.log(heroarr);
   }, [heroarr]);
 
-  // const characterArr = heroarr.map((hero, index) => (
-  //   <Charactercard
-  //     name={hero.name}
-  //     description={hero.description}
-  //     image={hero.thumbnail}
-  //   />
-  // ));
-
   let characterArr = null;
   if (heroarr) {
     characterArr = heroarr.map((hero, index) => (
       <Charactercard
         key={index}
         name={hero.name}
-        description={hero.description}
-        image={hero.thumbnail}
+        description={hero.powerstats}
+        image={hero.image.url}
       />
     ));
   }
 
   return (
     <>
-      <Navbar handleSearchSubmit={handleSubmit} />
+      <Navbar handleSearchSubmit={handleSubmit} suggestionList={suggestions} />
       {/* <Charactercard
         name={heroarr[1].name}
         description={heroarr[1].description}
