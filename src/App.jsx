@@ -5,7 +5,7 @@ import React, { useState, useEffect } from "react";
 import Charactercard from "./components/Charactercard";
 
 function App() {
-  const [heroarr, setHeroarr] = useState();
+  const [heroarr, setHeroarr] = useState([]);
   // const handleSubmit = async (searchHero) => {
   //   fetch(
   //     `https://gateway.marvel.com:443/v1/public/characters?nameStartsWith=spider-man&ts=1&apikey=28d1734eee27b04819f015a90d39e45e&hash=8e43e9b8786ade83ad56396cfa7eb337`
