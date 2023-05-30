@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 function Navbar({ handleSearchSubmit, suggestionList }) {
-  const [letter, setLetter] = useState();
+  const [letter, setLetter] = useState("");
 
   const handleLoad = (e) => {
     setLetter(e.target.value);
