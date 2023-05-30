@@ -1,23 +1,35 @@
 import React, { useState, useEffect } from "react";
 
 function Navbar({ handleSearchSubmit }) {
-  const [letter, setLetter] = useState();
+  const [letter, setLetter] = useState("");
 
   const handleLoad = (e) => {
-    setLetter(e.target.value);
+    const userInput = e.target.value;
+    setLetter(userInput);
+    if (userInput.trim() === "") {
+      handleSearchSubmit("");
+    }
+    // handleSearchSubmit(letter);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
     handleSearchSubmit(letter);
   };
 
-  // const handleSubmit = () => {
-  //   handleSearchSubmit(letter);
-  // };
+  useEffect(() => {
+    if (letter.trim() !== "") {
+      handleSearchSubmit(letter);
+    }
+    console.log(letter);
+  }, [letter]);
 
   return (
     <>
       <nav className="navbar bg-body-tertiary">
         <div className="container-fluid">
           <a className="navbar-brand">Hero-Hub</a>
-          <form onSubmit={handleLoad} className="d-flex" role="search">
+          <form onSubmit={handleSubmit} className="d-flex" role="search">
             <input
               className="form-control me-2"
               type="search"
