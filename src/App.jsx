@@ -53,7 +53,7 @@ function App() {
   if (heroarr) {
     characterArr = heroarr.map((hero, index) => (
       <Charactercard
-        key={index}
+        key={hero.id}
         name={hero.name}
         description={hero.description}
         image={hero.thumbnail}
